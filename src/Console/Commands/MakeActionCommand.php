@@ -14,17 +14,17 @@ class MakeActionCommand extends GeneratorCommand
 
     protected $type = 'Action';
 
-    public function handle(): int
+    public function handle(): bool|null
     {
         if (parent::handle() === false) {
-            return static::FAILURE;
+            $this->fail();
         }
 
         if ($this->option('test')) {
             $this->createTest();
         }
 
-        return static::SUCCESS;
+        return null;
     }
 
     protected function getStub(): string
