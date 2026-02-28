@@ -1,0 +1,12 @@
+* text=auto eol=lf
+
+/.github            export-ignore
+/tests              export-ignore
+.gitattributes      export-ignore
+.gitignore          export-ignore
+.editorconfig       export-ignore
+CHANGELOG.md        export-ignore
+pint.json           export-ignore
+phpstan.neon.dist   export-ignore
+CONTRIBUTING.md     export-ignore
+SECURITY.md         export-ignore

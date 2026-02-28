@@ -1,0 +1,5 @@
+<?php
+
+test('{{ class }}', function () {
+    //
+})->todo();
