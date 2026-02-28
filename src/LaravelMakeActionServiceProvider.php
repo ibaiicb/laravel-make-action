@@ -13,7 +13,15 @@ class LaravelMakeActionServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-make-action')
             ->hasConfigFile('make-action')
-            ->hasStubs(['action.stub', 'action.invokable.stub', 'action.queued.stub'])
             ->hasCommand(MakeActionCommand::class);
+    }
+
+    public function packageBooted(): void
+    {
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__ . '/../stubs' => base_path('stubs/vendor/laravel-make-action'),
+            ], 'laravel-make-action-stubs');
+        }
     }
 }

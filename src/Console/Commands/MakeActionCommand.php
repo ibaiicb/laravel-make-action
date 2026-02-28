@@ -14,15 +14,17 @@ class MakeActionCommand extends GeneratorCommand
 
     protected $type = 'Action';
 
-    public function handle(): int|bool
+    public function handle(): int
     {
-        $result = parent::handle();
+        if (parent::handle() === false) {
+            return static::FAILURE;
+        }
 
-        if ($result !== false && $this->option('test')) {
+        if ($this->option('test')) {
             $this->createTest();
         }
 
-        return $result;
+        return static::SUCCESS;
     }
 
     protected function getStub(): string
@@ -51,9 +53,10 @@ class MakeActionCommand extends GeneratorCommand
     protected function getOptions(): array
     {
         return array_merge(parent::getOptions(), [
+            ['force', 'f', InputOption::VALUE_NONE, 'Create the action even if it already exists'],
             ['invokable', 'i', InputOption::VALUE_NONE, 'Generate an invokable action with __invoke() method'],
-            ['queued', 'q', InputOption::VALUE_NONE, 'Generate a queued action that implements ShouldQueue'],
-            ['test', null, InputOption::VALUE_NONE, 'Generate an accompanying Pest test for the action'],
+            ['queued', null, InputOption::VALUE_NONE, 'Generate a queued action that implements ShouldQueue'],
+            ['test', 't', InputOption::VALUE_NONE, 'Generate an accompanying Pest test for the action'],
         ]);
     }
 

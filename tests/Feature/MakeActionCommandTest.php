@@ -3,8 +3,6 @@
 use Illuminate\Support\Facades\File;
 use LaravelMakeAction\Tests\TestCase;
 
-uses(TestCase::class);
-
 it('creates an action class in the default namespace', function () {
     $actionPath = app_path('Actions/SendWelcomeEmail.php');
 
