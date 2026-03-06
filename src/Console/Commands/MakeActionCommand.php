@@ -14,7 +14,7 @@ class MakeActionCommand extends GeneratorCommand
 
     protected $type = 'Action';
 
-    public function handle(): bool|null
+    public function handle(): ?bool
     {
         if (parent::handle() === false) {
             $this->fail();
@@ -31,8 +31,8 @@ class MakeActionCommand extends GeneratorCommand
     {
         $stub = match (true) {
             $this->option('invokable') => 'action.invokable',
-            $this->option('queued')    => 'action.queued',
-            default                    => 'action',
+            $this->option('queued') => 'action.queued',
+            default => 'action',
         };
 
         return $this->resolveStubPath($stub);
@@ -40,7 +40,7 @@ class MakeActionCommand extends GeneratorCommand
 
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace . '\\' . config('make-action.namespace', 'Actions');
+        return $rootNamespace.'\\'.config('make-action.namespace', 'Actions');
     }
 
     protected function buildClass($name): string
@@ -53,10 +53,10 @@ class MakeActionCommand extends GeneratorCommand
     protected function getOptions(): array
     {
         return [
-            ['force', 'f', InputOption::VALUE_NONE, 'Create the action even if it already exists'],
-            ['invokable', 'i', InputOption::VALUE_NONE, 'Generate an invokable action with __invoke() method'],
-            ['queued', null, InputOption::VALUE_NONE, 'Generate a queued action that implements ShouldQueue'],
-            ['test', 't', InputOption::VALUE_NONE, 'Generate an accompanying Pest test for the action'],
+            new InputOption('force', 'f', InputOption::VALUE_NONE, 'Create the action even if it already exists'),
+            new InputOption('invokable', 'i', InputOption::VALUE_NONE, 'Generate an invokable action with __invoke() method'),
+            new InputOption('queued', null, InputOption::VALUE_NONE, 'Generate a queued action that implements ShouldQueue'),
+            new InputOption('test', 't', InputOption::VALUE_NONE, 'Generate an accompanying Pest test for the action'),
         ];
     }
 
@@ -66,23 +66,24 @@ class MakeActionCommand extends GeneratorCommand
 
         return file_exists($published)
             ? $published
-            : __DIR__ . "/../../../stubs/{$stub}.stub";
+            : __DIR__."/../../../stubs/{$stub}.stub";
     }
 
     protected function createTest(): void
     {
         $actionClass = Str::studly(class_basename($this->getNameInput()));
-        $testName = $actionClass . 'Test';
+        $testName = $actionClass.'Test';
         $testDirectory = base_path('tests/Feature/Actions');
 
         if (! is_dir($testDirectory)) {
             mkdir($testDirectory, 0777, true);
         }
 
-        $testPath = $testDirectory . '/' . $testName . '.php';
+        $testPath = $testDirectory.'/'.$testName.'.php';
 
         if (file_exists($testPath)) {
             $this->components->warn("Test [{$testPath}] already exists.");
+
             return;
         }
 

@@ -20,7 +20,7 @@ class LaravelMakeActionServiceProvider extends PackageServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../stubs' => base_path('stubs/vendor/laravel-make-action'),
+                __DIR__.'/../stubs' => base_path('stubs/vendor/laravel-make-action'),
             ], 'laravel-make-action-stubs');
         }
     }
