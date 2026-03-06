@@ -52,12 +52,12 @@ class MakeActionCommand extends GeneratorCommand
 
     protected function getOptions(): array
     {
-        return array_merge(parent::getOptions(), [
+        return [
             ['force', 'f', InputOption::VALUE_NONE, 'Create the action even if it already exists'],
             ['invokable', 'i', InputOption::VALUE_NONE, 'Generate an invokable action with __invoke() method'],
             ['queued', null, InputOption::VALUE_NONE, 'Generate a queued action that implements ShouldQueue'],
             ['test', 't', InputOption::VALUE_NONE, 'Generate an accompanying Pest test for the action'],
-        ]);
+        ];
     }
 
     protected function resolveStubPath(string $stub): string
